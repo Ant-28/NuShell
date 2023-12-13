@@ -28,6 +28,8 @@ ITEMS : 'items';
 
 DOT : '.';
 
+ARITH : '+' | '-' | '*' | '/';
+
 COMMA : ',';
 NUMBER : [0-9]+;
 IO_NUMBER : NUMBER;
@@ -124,6 +126,6 @@ BANG : '!';
 QUOTE : '"';
 
 
-ARITH : '+' | '-' | '*' | '/';
+
 
 // ERROR : .+?;

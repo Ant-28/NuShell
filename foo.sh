@@ -1,6 +1,11 @@
-i=0
-for i in range(1, 2.5, 3){
-    echo $i
-}
+a = (1 2 3 4)
 
-echo $j
+echo a.len()
+
+echo a.items()
+
+for i in a.items() {
+    echo $i
+    echo $a.items()
+    echo $a.len()
+}

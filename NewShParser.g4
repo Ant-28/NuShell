@@ -78,7 +78,7 @@ for_clause       : custom_for_clause
 custom_for_clause returns [String result] : FOR LPAR for_assign SEMI for_comparison? SEMI for_loop_expr SEMI? RPAR (SEMI* | newline_list) brace_group
 {$result = $FOR.text + "(( " + $for_assign.result + $SEMI.text + $for_comparison.text + $SEMI.text + $for_loop_expr.text + " ))\n" }
 | FOR LPAR? ID IN RANGE LPAR a=(NUMBER|FLOAT) COMMA b=(NUMBER|FLOAT) COMMA c=(NUMBER|FLOAT) RPAR RPAR? (SEMI* | newline_list) brace_group {$result = $FOR.text + " " + $ID.text + " " + $IN.text + " $(seq " + $a.text + " " + $b.text + " " + $c.text + " )"   }
-| FOR LPAR? ID IN array_items RPAR? (SEMI* | newline_list) brace_group {$result = $FOR.text + " " + $ID.text + " " + $IN.text + " " + $array_items.result + "\n"};
+| FOR LPAR? ID IN for_array_items RPAR? (SEMI* | newline_list) brace_group {$result = $FOR.text + " " + $ID.text + " " + $IN.text + " " + $for_array_items.result + "\n"};
 
 
 // custom_for_clause returns [String result] : FOR LPAR assign SEMI comparison? SEMI loop_expr RPAR
@@ -234,8 +234,15 @@ array_ops returns [String result] :       array_length {$result = $array_length.
                 | array_items {$result = $array_items.result};
 
 array_length returns [String result] : a=(ID|VAR) DOT LEN LPAR RPAR {$result = "${#" + ($a.text if $a.text[0] != '$' else $a.text[1:]) + "[@]" + "}"};
+
+// this doesn't
 array_items  returns [String result] : a=(ID|VAR) DOT ITEMS LPAR RPAR {$result = "${" + ($a.text if $a.text[0] != '$' else $a.text[1:]) + "[@]" + "}"};
 
+// this has an ignorable parent 
+for_array_items  returns [String result] : a=(ID|VAR) DOT ITEMS LPAR RPAR {$result = "${" + ($a.text if $a.text[0] != '$' else $a.text[1:]) + "[@]" + "}"};
+
+
+// old grammar, for reference:
 
 // <FOR-COMMAND> :  for <WORD> <NEWLINE-LIST> do <COMPOUND-LIST> done
 //             |  for <WORD> <NEWLINE-LIST> '{' <COMPOUND-LIST> '}'

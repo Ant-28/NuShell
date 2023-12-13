@@ -1,6 +1,12 @@
-i=0 
- for i in $(seq 1 2.5 3 ) { 
- echo $i 
- } 
+a=(1 2 3 4) 
  
- echo $j
+ echo ${#a[@]} 
+ 
+ echo ${a[@]} 
+ 
+ for i in ${a[@]}
+ { 
+ echo $i 
+ echo ${a[@]} 
+ echo ${#a[@]} 
+ }

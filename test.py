@@ -76,7 +76,7 @@ class MyCustomListener(ParseTreeListener):
         # modified child nodes
         self.custom_children = ['assign', 'for_assign', 'custom_while_clause',
                                 'custom_for_clause', 'custom_if_clause', 'array_length', 'array_items', 'arith_expr', 'expr', 'expr2', 'filename'
-                                , 'brace_group_mod']
+                                , 'brace_group_mod', 'for_array_items']
 
         super().__init__()
 
@@ -86,7 +86,7 @@ class MyCustomListener(ParseTreeListener):
         result = None
         ctx.result = result # this is obtained from a parser action
 
-    def generic_exit(self, ctx, remove_customs=False):
+    def generic_exit(self, ctx):
         # get the parent 
         parent_ctx = ctx.parentCtx
         context_type = None # predefine context_type for loop
@@ -97,11 +97,8 @@ class MyCustomListener(ParseTreeListener):
         while parent_ctx != None:
             context_type = parent_ctx.getRuleIndex() # this is a number
             parentList.append(NewShParser.ruleNames[context_type]) # get the actual rule name
-
-            ignore = self.ignorable_parents if not remove_customs else \
-                  self.ignorable_parents.difference(['custom_for_clause', 'custom_if_clause', 'custom_while_clause'])
-
-            if len(set(parentList).intersection(ignore)) > 0:
+            
+            if len(set(parentList).intersection(self.ignorable_parents)) > 0:
                 return super().exitEveryRule(ctx) # default return
             parent_ctx = parent_ctx.parentCtx
         
@@ -150,6 +147,13 @@ class MyCustomListener(ParseTreeListener):
     def exitArray_items(self, ctx):
         self.statements.append(ctx.result)
         
+    def enterFor_array_items(self, ctx):
+        self.generic_entry(ctx)
+
+    def exitFor_array_items(self, ctx):
+        self.generic_exit(ctx)
+
+    
 
     def exitArray_defn(self, ctx):
         self.statements.append(ctx.result)
@@ -174,8 +178,6 @@ class MyCustomListener(ParseTreeListener):
     def enterAssign(self, ctx):
         result = None  # Initialize with a default value if needed
         ctx.result = result
-
-    
 
     def exitAssign(self, ctx):
         self.statements.append(ctx.result)
