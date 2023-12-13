@@ -4,65 +4,6 @@ import antlr4
 from NewShLexer import NewShLexer
 from NewShParser import NewShParser
 
-# from antlr4.error.ErrorStrategy import DefaultErrorStrategy
-
-
-# class MyCustomErrorListener(DiagnosticErrorListener):
-
-  
-#     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-#         # print(offendingSymbol.text)
-#         print(f"Syntax Error at line {line}, column {column}: {msg}, offendingSymbol: ")
-#         self.storeTokensUntilOffendingSymbol(recognizer, offendingSymbol)
-
-#     def storeTokensUntilOffendingSymbol(self, recognizer, offendingSymbol):
-#         # Store tokens until a newline or a semicolon is encountered
-#         current_token = recognizer.getCurrentToken()
-#         tokens = []
-        
-#         while current_token.text not in [offendingSymbol.text, "<EOF>"]:
-            
-        
-#             tokens.append(current_token)
-#             recognizer.consume()
-#             current_token = recognizer.getCurrentToken()
-#         while current_token.text not in ['\n', ';', "<EOF>"]:
-#             tokens.append(current_token)
-#             recognizer.consume()
-#             current_token = recognizer.getCurrentToken()
-#         print(dir(recognizer))
-#         recognizer.ruleNames[recognizer.getRuleIndex()]
-#         print("Stored Tokens:", [token.text for token in tokens])
-
-
-# class MyCustomListener(ParseTreeListener):
-    
-#     def enterEveryRule(self, ctx):
-#         print(dir(self))
-#         current_rule_name = self.parser.ruleNames[ctx.getRuleIndex()]
-#         print(f"Entering rule: {current_rule_name}")
-# class MyErrorStrategy(DefaultErrorStrategy):
-#     def recover(self, recognizer:Parser, e:RecognitionException):
-#         if self.lastErrorIndex==recognizer.getInputStream().index \
-#             and self.lastErrorStates is not None \
-#             and recognizer.state in self.lastErrorStates:
-#            # uh oh, another error at same token index and previously-visited
-#            # state in ATN; must be a case where LT(1) is in the recovery
-#            # token set so nothing got consumed. Consume a single token
-#            # at least to prevent an infinite loop; this is a failsafe.
-#             print(recognizer.getCurrentToken())
-#             print("debugging...")
-#             recognizer.consume()
-
-#         self.lastErrorIndex = recognizer._input.index
-#         if self.lastErrorStates is None:
-#             self.lastErrorStates = []
-#         self.lastErrorStates.append(recognizer.state)
-#         followSet = self.getErrorRecoverySet(recognizer)
-#         print()
-#         self.consumeUntil(recognizer, followSet)
-
-
 
 class MyCustomListener(ParseTreeListener):
     
