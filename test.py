@@ -112,13 +112,13 @@ class MyCustomListener(ParseTreeListener):
         self.generic_entry(ctx)
 
     def enterFilename(self, ctx):
-        print("entering filename: ", self.statements)
+        # print("entering filename: ", self.statements)
         self.generic_entry(ctx)
 
     def exitFilename(self, ctx):
         
         self.generic_exit(ctx)
-        print("exiting filename: ", self.statements)
+        # print("exiting filename: ", self.statements)
 
     def exitExpr(self, ctx):
         self.generic_exit(ctx)
@@ -295,12 +295,12 @@ def main(argv):
     tree = parser.program()
 
 
-    print(tree.toStringTree(recog=parser))
+    # print(tree.toStringTree(recog=parser))
 
-    for token in tokens.getTokens(0, 100):
-        print(token)
-    print(listener.statements)
-    print("Unparsed tree: ", " ".join(listener.statements))
+    # for token in tokens.getTokens(0, 100):
+    #     print(token)
+    # print(listener.statements)
+    # print("Unparsed tree: ", " ".join(listener.statements))
 
     with open(outfile, "w") as ofile:
         ofile.write(" ".join(listener.statements))

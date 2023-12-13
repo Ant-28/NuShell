@@ -77,7 +77,7 @@ for_clause       : custom_for_clause
                  ;
 custom_for_clause returns [String result] : FOR LPAR for_assign SEMI for_comparison? SEMI for_loop_expr SEMI? RPAR (SEMI* | newline_list) brace_group
 {$result = $FOR.text + "(( " + $for_assign.result + $SEMI.text + $for_comparison.text + $SEMI.text + $for_loop_expr.text + " ))\n" }
-| FOR LPAR? ID IN RANGE LPAR a=(NUMBER|FLOAT) COMMA b=(NUMBER|FLOAT) COMMA c=(NUMBER|FLOAT) RPAR RPAR? (SEMI* | newline_list) brace_group {$result = $FOR.text + " " + $ID.text + " " + $IN.text + " $(seq " + $a.text + " " + $b.text + " " + $c.text + " )"   }
+| FOR LPAR? ID IN RANGE LPAR a=(NUMBER|FLOAT) COMMA b=(NUMBER|FLOAT) COMMA c=(NUMBER|FLOAT) RPAR RPAR? (SEMI* | newline_list) brace_group {$result = $FOR.text + " " + $ID.text + " " + $IN.text + " $(seq " + $a.text + " " + $b.text + " " + $c.text + " )\n"   }
 | FOR LPAR? ID IN for_array_items RPAR? (SEMI* | newline_list) brace_group {$result = $FOR.text + " " + $ID.text + " " + $IN.text + " " + $for_array_items.result + "\n"};
 
 
